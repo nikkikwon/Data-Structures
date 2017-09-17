@@ -6,7 +6,7 @@
  *   Modified (FA17): Jordi Paris Ferrer <parisfe2@illinois.edu>
  */
 
-#include "png.h"
+#include "cs225/PNG.h"
 #include "color.h"
 #include "rectangle.h"
 #include "shape.h"
