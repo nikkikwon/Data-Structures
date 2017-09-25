@@ -22,3 +22,4 @@ class Image:public PNG{
     void scale(unsigned w, unsigned h);
 };
 #endif
+

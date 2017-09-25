@@ -154,13 +154,16 @@ TEST_CASE("A basic StickerSheet works", "[weight=5][part=2]") {
   i.readFromFile("tests/i.png");
 
   StickerSheet sheet(alma, 5);
-  cout<<"WTF"<<endl;
   sheet.addSticker(i, 20, 200);
-  cout<<"wtf"<<endl;
   Image expected;
   expected.readFromFile("tests/expected.png");
 
+  Image myImage;
+  myImage = sheet.render();
+  myImage.writeToFile("myImage.png");
+
   REQUIRE( sheet.render() == expected );
+  
 }
 
 
