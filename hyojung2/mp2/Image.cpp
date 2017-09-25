@@ -237,7 +237,10 @@ using namespace cs225;
         for (unsigned int j=0; j < height() ; j++ )
         {
 	  HSLAPixel *pixel = getPixel(i, j);
-	  HSLAPixel *pixelOriginal = original.getPixel((unsigned int)i/factor,(unsigned int) j/factor);
+	  unsigned int newx=(unsigned int)i/factor;
+          unsigned int newy=(unsigned int)j/factor;
+
+	  HSLAPixel *pixelOriginal = original.getPixel(newx,newy);
 
 	  pixel->h = pixelOriginal -> h;
           pixel->s = pixelOriginal -> s;

@@ -142,7 +142,6 @@ TEST_CASE("Image scale(0.5) scales pixel data in a reasonable way", "[weight=1][
 }
 
 
-/*
 
 // Part 2 Testing:
 #include "../StickerSheet.h"
@@ -155,12 +154,13 @@ TEST_CASE("A basic StickerSheet works", "[weight=5][part=2]") {
   i.readFromFile("tests/i.png");
 
   StickerSheet sheet(alma, 5);
+  cout<<"WTF"<<endl;
   sheet.addSticker(i, 20, 200);
-
+  cout<<"wtf"<<endl;
   Image expected;
   expected.readFromFile("tests/expected.png");
 
   REQUIRE( sheet.render() == expected );
 }
 
-*/
+
