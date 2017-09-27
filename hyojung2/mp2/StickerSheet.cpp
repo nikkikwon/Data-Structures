@@ -11,9 +11,9 @@ using namespace cs225;
 
     StickerSheet:: StickerSheet (const Image &picture, unsigned max)
     {
-      //base_ = picture;
+      //created var for base pic Image base_
+      base_ = picture;
 
-      //Image base=picture;
       max_ = max;
       layer_=new Image*[max];
 
@@ -22,33 +22,46 @@ using namespace cs225;
 
       for (unsigned int i=0; i < max; i++)
       {
-	layer_[i]=NULL; 
+	    layer_[i]=NULL; 
         x_[i]=0;
-	y_[i]=0;
+	    y_[i]=0;
       } 
-      layer_[0]=new Image;
-      *layer_[0]=picture;
+      //layer_[0]=new Image;
+      //*layer_[0]=picture;
     }
 
-    StickerSheet:: ~StickerSheet ()
+
+    StickerSheet:: ~StickerSheet()
     {   
-      remove(); 
+//error here 
+     remove(); 
     }
     
     void StickerSheet:: remove()
     {
       for (unsigned int i=0; i < max_; i++)
       {
-	delete layer_[i];
-        layer_[i]=NULL;
+//'delete' to delete previously layer_[i]=new image; assigned image pointer(HEAP)
+        if(layer_ != NULL)
+	    {
+	      delete layer_[i];
+          layer_[i]=NULL;
+    	}
       }
       delete[] layer_;
-      delete[] x_;
-      delete[] y_;
-
       layer_=NULL;
-      x_=NULL;
-      y_=NULL;
+
+      if (x_ != NULL)
+      {
+        delete[] x_;
+        x_=NULL;
+      }
+     
+      if (y_ != NULL)
+      {
+        delete[] y_;
+        y_=NULL;
+      }     
     }
 
     StickerSheet:: StickerSheet (const StickerSheet &other)
@@ -60,6 +73,7 @@ using namespace cs225;
     {
 
       //base_ = other.base_;
+      base_=other.base_;
       max_ = other.max_;
 
       layer_=new Image*[max_];
@@ -68,21 +82,21 @@ using namespace cs225;
    
       for (unsigned int i=0; i < max_; i++)
       {
-	layer_[i]=NULL;
- 	x_[i]=0;
-	y_[i]=0;
+	    layer_[i]=NULL;
+ 	    x_[i]=0;
+	    y_[i]=0;
       }
       
       for (unsigned int i=0; i < max_; i++)
       {
         if(other.layer_[i] != NULL)
         {
-	  layer_[i]= new Image;
+	      layer_[i]= new Image;
           *layer_[i]= *(other.layer_[i]);
- 	  x_[i]= other.x_[i];
- 	  y_[i]= other.y_[i];
+ 	      x_[i]= other.x_[i];
+ 	      y_[i]= other.y_[i];
           	
-	}                
+	    }                
       }
 
     }
@@ -90,10 +104,10 @@ using namespace cs225;
    const StickerSheet& StickerSheet:: operator = (const StickerSheet &other)
     {
       if (this == &other)
-	return *this;
+	    return *this;
       else
       {
-	remove();
+	    remove();
         copy(other);
         return *this; 
       }       
@@ -109,62 +123,78 @@ using namespace cs225;
 
       //make another copy of current instance's x_,y_ array.
       //StickerSheet temp(this->base_, this->max_);
+      //changed from this->max_ to max;
 
-      StickerSheet temp(*(this->layer_[0]), this->max_);
+      StickerSheet temp(base_, max_);
       temp=*this;
-     
-      //remove the previously allocated memory of x_,y_of current instance      
+   
+      //remove the previously allocated memory of x_,y_of current instance
+      //remove(); to this.remove() this -> remove();      
       remove(); 
 
       max_= max;
-          
-      layer_=new Image*[max];
-      x_=new unsigned int[max];
-      y_=new unsigned int[max];
-    
-      for (unsigned int i=0; i < max; i++)
+       
+      //put base pic in (done below?)  
+      base_=temp.base_; 
+
+      layer_=new Image*[max_];
+      x_=new unsigned int[max_];
+      y_=new unsigned int[max_];
+     
+      for (unsigned int i=0; i < max_; i++)
       {
         layer_[i]=NULL;
-	x_[i]=0;
-	y_[i]=0;
+	    x_[i]=0;
+	    y_[i]=0;
       } 
-      //put base pic in (done below?)
+ 
+    
       //layer_[0]=temp.layer_[0];
 
-      if (temp.max_ < max)
+      if (temp.max_ < max_)
       {
-	for (unsigned int i = 0; i < temp.max_; i++)
-	{
-          layer_[i]=temp.layer_[i];
-	  x_[i]=temp.x_[i];
-	  y_[i]=temp.y_[i];
-	}
+       // layer_=new Image*[max];
+       // x_=new unsigned int[max];
+       //y_=new unsigned int[max];
+   
+	    for (unsigned int i = 0; i < temp.max_; i++)
+    	{
+          //layer_[i]=temp.layer_[i];
+          if(temp.layer_[i] != NULL)
+          {
+             layer_[i]= new Image;
+             *layer_[i]= *(temp.layer_[i]);
+          }
+          else
+             layer_[i] = NULL;
+
+	      x_[i]=temp.x_[i];
+	      y_[i]=temp.y_[i];
+	    }
       }
       //new maximum is smaller than the previous one
       else
       {
-	for(unsigned int i = 0; i < max; i++)
- 	{
-	  layer_[i]=temp.layer_[i];
-	  x_[i]=temp.x_[i];
-	  y_[i]=temp.y_[i];
-	}
+	    for(unsigned int i = 0; i < max_; i++)
+ 	    {
+	      //layer_[i]=temp.layer_[i];
+          if (temp.layer_[i] != NULL)
+          {
+            layer_[i]= new Image;
+            *layer_[i]= *(temp.layer_[i]);
+          }
+          else
+              layer_[i] = NULL;
+
+	      x_[i]=temp.x_[i];
+	      y_[i]=temp.y_[i];
+    	}
       }
+
       //remove mem allocated for temp
-      for (unsigned int i=0; i < temp.max_; i++)
-      {  
-        delete layer_[i];
-	layer_[i]=NULL;
-      }
-      delete[] layer_;
-      delete[]temp.x_;
-      delete[]temp.y_;
-
-      temp.layer_=NULL;
-      temp.x_=NULL;
-      temp.y_=NULL; 
+      //deleted previous and added temp.remove();
+      temp.remove();
     }
-
 
     int StickerSheet:: addSticker (Image &sticker, unsigned x, unsigned y)
     {
@@ -231,7 +261,19 @@ using namespace cs225;
       //make an image with width and height adjusted(base image and stickers all considered)
 
       Image output;
-      output.resize(width, height);
+      output.resize(base_.width(), base_.height());
+      Image basenew = base_;
+
+      for(unsigned int x = 0; x < output.width(); x++ )
+	  {
+	    for(unsigned y = 0; y < output.height(); y++)
+	    {
+		HSLAPixel *pixelout = output.getPixel(x, y);
+		HSLAPixel *pixel = (basenew).getPixel(x,y);
+		if( (*pixel).l != 1)
+			*(pixelout)=*(pixel);
+ 	    }
+	  }
       
 
       for(unsigned int i =0; i < max_; i++)
