@@ -11,10 +11,10 @@ int main() {
   StickerSheet sheet(alma, 5);
   sheet.addSticker(i, 20, 200);
 
-  StickerSheet lol(alma, 5);
+  StickerSheet paper(alma, 5);
   sheet.addSticker(i, 50, 100);
 
-  StickerSheet omg(alma, 5);
+  StickerSheet plane(alma, 5);
   sheet.addSticker(i, 90, 10);
 
   Image myImage;

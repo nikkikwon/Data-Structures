@@ -27,6 +27,7 @@ class StickerSheet{
     
     private:
 
+    Image base_;
     Image **layer_;
     unsigned max_;
     unsigned *x_;
