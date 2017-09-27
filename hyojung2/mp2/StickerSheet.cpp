@@ -200,14 +200,14 @@ using namespace cs225;
     {
       for(unsigned int index=0; index < max_; index++)
       {
-	if (layer_[index]== NULL)
-	{
-	  layer_[index] = new Image;
-          (*layer_[index])=sticker;
-	  x_[index]=x; 
-	  y_[index]=y;
-	  return index;
-	}
+	    if (layer_[index]== NULL)
+	    {
+	        layer_[index] = new Image;
+            (*layer_[index])=sticker;
+	        x_[index]=x; 
+	        y_[index]=y;
+	        return index;
+	    }
       }
       return -1;
      
@@ -218,7 +218,7 @@ using namespace cs225;
       if (index > max_)
         return false;
       if (layer_[index]==NULL)
-	return false;
+	    return false;
 
       x_[index]=x;
       y_[index]=y;
@@ -236,7 +236,7 @@ using namespace cs225;
       if (index > max_)
         return NULL;
       if (layer_[index]==NULL)
-	return NULL;
+	    return NULL;
       return layer_[index];    
     }
     
@@ -248,14 +248,14 @@ using namespace cs225;
 
       for(unsigned int i=0; i < max_; i++)
       {
-	if(layer_[i] != NULL)
-   	{
-	  if( x_[i] + layer_[i] -> width() > width )
-	    width = x_[i] + layer_[i] -> width(); 
+	    if(layer_[i] != NULL)
+   	    {
+	         if( x_[i] + layer_[i] -> width() > width )
+	           width = x_[i] + layer_[i] -> width(); 
 
-	  if( y_[i] + layer_[i] -> height() > height )
-	    height = y_[i] + layer_[i] -> height();
-	}
+	         if( y_[i] + layer_[i] -> height() > height )
+	           height = y_[i] + layer_[i] -> height();
+	    }
       }  
 
       //make an image with width and height adjusted(base image and stickers all considered)
@@ -278,24 +278,24 @@ using namespace cs225;
 
       for(unsigned int i =0; i < max_; i++)
       {
-	if(layer_[i] != NULL)
-	{
-	  unsigned int wid = layer_[i]->width();
-	  unsigned int hei = layer_[i]->height();
-	  unsigned int xval=x_[i];
-	  unsigned int yval=y_[i];
+	    if(layer_[i] != NULL)
+    	{
+	      unsigned int wid = layer_[i]->width();
+	      unsigned int hei = layer_[i]->height();
+	      unsigned int xval=x_[i];
+	      unsigned int yval=y_[i];
 	
-	  for(unsigned int x = 0; x < wid; x++ )
-	  {
-	    for(unsigned y = 0; y < hei; y++)
-	    {
-		HSLAPixel *pixelout = output.getPixel(x+xval, y+yval);
-		HSLAPixel *pixel = (*layer_[i]).getPixel(x,y);
-		if( (*pixel).l != 1)
-			*(pixelout)=*(pixel);
- 	    }
-	  }
-	}
+	      for(unsigned int x = 0; x < wid; x++ )
+	      {
+	           for(unsigned y = 0; y < hei; y++)
+	           {
+		            HSLAPixel *pixelout = output.getPixel(x+xval, y+yval);
+		            HSLAPixel *pixel = (*layer_[i]).getPixel(x,y);
+		            if( (*pixel).l != 1)
+		            	*(pixelout)=*(pixel);
+ 	           }
+	      }
+    	}
       }
  
    return output;
