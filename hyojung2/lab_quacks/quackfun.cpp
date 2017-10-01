@@ -26,9 +26,18 @@ template <typename T>
 T sum(stack<T>& s)
 {
     // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
-                // Note: T() is the default value for objects, and 0 for
-                // primitive types
+    if (s.empty())  
+		return T();
+
+	else
+	{
+		T result = s.top(); // get data from the top of the stack
+        s.pop(); // pop the value received
+    	
+	    T val =  sum(s) + result;  
+        s.push(result);
+		return val;	
+	}
 }
 
 /**
@@ -46,10 +55,58 @@ T sum(stack<T>& s)
 template <typename T>
 void scramble(queue<T>& q)
 {
-    stack<T> s;
-    // optional: queue<T> q2;
+ 	stack<T> s;
+    //queue<T> q2;    
+    // Your code here 
+	int node = 1;
+	int count = 0;
+	int size = q.size();
 
-    // Your code here
+	while(count < size)
+	{
+		if(node % 2 == 0) //For those that reverse
+		{
+	
+			int NODE = node;
+
+			if(NODE > size-count)
+				NODE = size-count;
+
+			for(int i = 0; i < NODE; i++)
+			{
+				s.push(q.front());
+				q.pop();
+			}
+			for(int i = 0; i < NODE; i++)
+			{
+				q.push(s.top());
+				s.pop();
+			}
+	
+			count = count + NODE;
+			node++;
+		}
+
+		else  //for those that stays the same
+		{
+			int NODE = node;
+			
+			if(NODE > size-count)
+				NODE = size-count;
+
+			for (int i = 0;i < NODE; i++)
+			{
+				s.push(q.front());	
+				q.pop();
+
+				q.push(s.top());
+				s.pop();	
+			}
+			
+			count = count + NODE;
+			node++;			
+		}
+	}
 }
 
 /**
@@ -68,12 +125,35 @@ void scramble(queue<T>& q)
  */
 template <typename T>
 bool verifySame(stack<T>& s, queue<T>& q)
-{
+{	
     bool retval = true; // optional
     //T temp1; // rename me
     //T temp2; // rename :)
 
+	if (s.empty())
+		return true;
+	T top = s.top();
+	s.pop();	
+	retval = verifySame(s,q); //it will recurse until s.empty() = 1
+	
+	retval = (retval && ( top == q.front() )); //determine whether the components are matching or not and set retval
+
+	q.push(q.front());
+	q.pop();
+	s.push(top);
+	
     return retval;
 }
 
 }
+
+
+
+
+
+
+
+
+
+
+
