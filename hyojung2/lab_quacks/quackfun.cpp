@@ -64,14 +64,17 @@ void scramble(queue<T>& q)
 
 	while(count < size)
 	{
+		
+	 	int NODE = node;  
+		int leftover;
+
+		leftover = size-count; 
+
+		if(NODE > leftover) //Take account for those that are incomplete in number
+			NODE = leftover;
+
 		if(node % 2 == 0) //For those that reverse
 		{
-	
-			int NODE = node;
-
-			if(NODE > size-count)
-				NODE = size-count;
-
 			for(int i = 0; i < NODE; i++)
 			{
 				s.push(q.front());
@@ -82,18 +85,11 @@ void scramble(queue<T>& q)
 				q.push(s.top());
 				s.pop();
 			}
-	
-			count = count + NODE;
 			node++;
+			count = count + NODE;
 		}
-
 		else  //for those that stays the same
 		{
-			int NODE = node;
-			
-			if(NODE > size-count)
-				NODE = size-count;
-
 			for (int i = 0;i < NODE; i++)
 			{
 				s.push(q.front());	
@@ -102,9 +98,8 @@ void scramble(queue<T>& q)
 				q.push(s.top());
 				s.pop();	
 			}
-			
-			count = count + NODE;
-			node++;			
+			node++;	
+			count = count + NODE;		
 		}
 	}
 }
