@@ -153,9 +153,37 @@ bool BinaryTree<T>::isOrdered(Node * subRoot) const
 template <typename T>
 void BinaryTree<T>::printPaths(vector<vector<T> > &paths) const
 {
-    // your code here
-		 
+   // your code here
+	 vector<T> buff;
+   printPaths(root, paths, buff);		 
 }
+
+template <typename T>
+void BinaryTree<T>::printPaths(Node* subRoot, vector<vector<T> > &paths, vector<T> buff) const
+{
+		if (subRoot == NULL)
+			return;
+
+    buff.push_back(subRoot -> elem);
+
+    if(subRoot-> left == NULL && subRoot -> right == NULL  )
+    {
+      paths.push_back(buff);
+    }
+
+    if(subRoot->left != NULL)
+    {
+        printPaths(subRoot -> left, paths, buff );
+    }
+
+    if(subRoot->right != NULL)
+    {
+        printPaths(subRoot-> right, paths,buff);
+    }
+
+		return;
+}
+
 
 /**
  * Each node in a tree has a distance from the root node - the depth of that
