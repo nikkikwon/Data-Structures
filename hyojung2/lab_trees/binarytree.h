@@ -157,6 +157,7 @@ class BinaryTree
 	bool isOrdered(Node * subRoot) const;
         bool isOrdered(const Node* subRoot) const;
         int sumDistances(const Node * subRoot, int length, int sum) const;
+	void printPaths(Node* subRoot, vector<vector<T> > &paths, vector<T> buff) const;
         
     /**
      * Private helper function for the public height function.
