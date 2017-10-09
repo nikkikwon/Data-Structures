@@ -153,7 +153,11 @@ class BinaryTree
      * Look at the private helpers for height and printLeftToRight
      *  as examples.
      */
-
+	void mirror(Node * subRoot);
+	bool isOrdered(Node * subRoot) const;
+        bool isOrdered(const Node* subRoot) const;
+        int sumDistances(const Node * subRoot, int length, int sum) const;
+        
     /**
      * Private helper function for the public height function.
      * @param subRoot The current node in the recursion

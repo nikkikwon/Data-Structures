@@ -77,6 +77,21 @@ template <typename T>
 void BinaryTree<T>::mirror()
 {
     //your code here
+	mirror(root);
+}
+
+template <typename T>
+void BinaryTree<T>::mirror(Node * subRoot)
+{
+	if (subRoot == NULL)
+		return;
+
+	mirror(subRoot -> left);
+	mirror(subRoot -> right);
+
+	Node * temp = subRoot -> left;
+	subRoot -> left = subRoot -> right;
+	subRoot -> right = temp;
 }
 
 /**
@@ -84,13 +99,48 @@ void BinaryTree<T>::mirror()
  *  nondecreasing list output values, and false otherwise. This is also the
  *  criterion for a binary tree to be a binary search tree.
  */
+
 template <typename T>
 bool BinaryTree<T>::isOrdered() const
 {
-    // your code here
-    return false;
+	// your code here
+	return isOrdered(root);	
 }
 
+template <typename T>
+bool BinaryTree<T>::isOrdered(Node * subRoot) const
+{
+	bool answer = true;
+
+	if (subRoot == NULL) 
+		return true;
+	
+	if(subRoot->left == NULL && subRoot->right == NULL)
+  	return true;
+
+  if(subRoot->left != NULL)
+	{
+		bool temp;
+
+		if ((subRoot->left->elem < subRoot->elem)) 
+			temp = true;
+		else 
+			temp = false;
+  	answer = answer && isOrdered(subRoot->left) && temp ;
+  }
+
+  if(subRoot->right != NULL)
+	{
+		bool temp;
+		
+		if (( subRoot->right->elem > subRoot->elem))
+			temp = true;
+		else 
+			temp = false;
+  	answer = answer && isOrdered(subRoot->right) && temp ;
+  }
+  return answer;
+}
 
 /**
  * creates vectors of all the possible paths from the root of the tree to any leaf
@@ -104,8 +154,8 @@ template <typename T>
 void BinaryTree<T>::printPaths(vector<vector<T> > &paths) const
 {
     // your code here
+		 
 }
-
 
 /**
  * Each node in a tree has a distance from the root node - the depth of that
@@ -119,5 +169,28 @@ template <typename T>
 int BinaryTree<T>::sumDistances() const
 {
     // your code here
-    return -1;
+		int sum = 0;    
+		int length = -1;
+		sum = sumDistances(root, length, sum);
+		return sum;
 }
+ 
+template <typename T>
+int BinaryTree<T>::sumDistances(const Node * subRoot, int length, int sum) const
+{
+	if (root == NULL)
+		return 0;
+
+  length++;
+
+	sum = sum + length;
+
+	if(subRoot->left != NULL)
+		sum = sumDistances(subRoot->left,length, sum);
+
+	if(subRoot->right != NULL)
+		sum = sumDistances(subRoot->right,length, sum);
+
+	return sum;
+}
+
