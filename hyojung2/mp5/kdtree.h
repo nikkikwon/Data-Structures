@@ -241,6 +241,10 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+    int getd(const Point<Dim> & point1, const Point<Dim> & point2) const;
+    void quickselect(int left, int right, int midindex, int dimension);
+    int partition(int left, int right, int pivotIndex, int dimension);
+    void KDTreehelper(int left, int right, int dimension);
 
 };
 
