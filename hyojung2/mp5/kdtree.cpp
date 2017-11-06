@@ -44,13 +44,18 @@ KDTree<Dim>::KDTree(const vector<Point<Dim>>& newPoints)
     
 }
 
-template <int Dim>
+template<int Dim>
 Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
 {
     /**
      * @todo Implement this function!
      */
-    return Point<Dim>();
+
+    Point<Dim> currentBest;
+    bool isFirst = true;
+    findNNHelper(0, points.size() - 1, 0, 0, isFirst, query, currentBest);
+
+    return currentBest;
 }
 
 template<int Dim>
@@ -121,3 +126,86 @@ int KDTree<Dim>::partition(int left, int right, int pivotIndex, int dimension)
 
     return storeIndex;
 }
+
+template<int Dim>
+void KDTree<Dim>::findNNHelper(int left, int right, int dimension, int min, bool &isFirst, const Point<Dim> & query, Point<Dim> & currentBest) const
+{
+    int mid = (left + right)/2;
+
+    if(left >= right)
+    {
+        if(isFirst)
+        {
+            isFirst = false;
+            currentBest = points[right];
+        }
+        else if (shouldReplace(query, currentBest, points[left]))
+        {
+                currentBest = points[left];
+        }
+        return;
+    } 
+
+     if(smallerDimVal(query, points[mid], dimension))
+    {
+        findNNHelper(left, mid - 1, (dimension + 1) % Dim, min, isFirst, query, currentBest);
+
+        min = getd(currentBest, query);
+
+        if((query[dimension] - points[mid][dimension]) * (query[dimension] - points[mid][dimension]) <= min)
+            findNNHelper(mid + 1, right, (dimension + 1) % Dim, min, isFirst, query, currentBest);
+
+        if(shouldReplace(query, currentBest, points[mid]))
+            currentBest = points[mid];
+    }
+
+    else
+    {
+        findNNHelper(mid + 1, right, (dimension + 1) % Dim, min, isFirst, query, currentBest);
+
+        min = getd(currentBest, query);
+
+        if((query[dimension] - points[mid][dimension]) * (query[dimension] - points[mid][dimension]) <= min)
+            findNNHelper(left, mid - 1, (dimension + 1) % Dim, min, isFirst, query, currentBest); 
+
+        if(shouldReplace(query, currentBest, points[mid]))
+            currentBest = points[mid];  
+    }
+    return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
