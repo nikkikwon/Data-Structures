@@ -246,6 +246,16 @@ class KDTree
     int partition(int left, int right, int pivotIndex, int dimension);
     void KDTreehelper(int left, int right, int dimension);
 
+
+
+    void findNNHelper(int left, int right, int dimension, int min, bool & isFirst, const Point<Dim> & query, Point<Dim> & currentBest) const;
+    
+
+
+
+
+   
+   // void findNNHelper(0, points.size()-1, 0, 0, true, query, currentBest);
 };
 
 #include "kdtree.cpp"
