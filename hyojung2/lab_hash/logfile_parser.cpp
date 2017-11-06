@@ -69,20 +69,25 @@ LogfileParser::LogfileParser(const string& fname) : whenVisitedTable(256)
          * this problem. This should also build the uniqueURLs member
          * vector as well.
          */
-        string uniqueUrl = ll.url;
-		string new_key = ll.customer.substr(1,ll.customer.size()-3);
-		new_key.append(uniqueUrl);
-		if(whenVisitedTable.keyExists(new_key))
-		{
-			if(whenVisitedTable[new_key] < ll.date)
-			whenVisitedTable[new_key]= ll.date;
-		}
-		else
-			whenVisitedTable.insert(new_key, ll.date);
-		if(!pageVisitedTable.keyExists(uniqueUrl))
-			uniqueURLs.push_back(uniqueUrl);	
-		pageVisitedTable[uniqueUrl] = true;
-		
+
+        string key = ll.customer + ll.url;
+        time_t date = ll.date;
+        
+        if(!pageVisitedTable[ll.url])
+        {
+            pageVisitedTable[ll.url] = true;
+            uniqueURLs.push_back(ll.url);
+        }
+
+        if (whenVisitedTable.keyExists(key) && (whenVisitedTable[key] > date))
+        {
+            ;
+        }
+        else
+        {
+            whenVisitedTable[key] = date;
+        }
+
     }
     infile.close();
 }
@@ -132,3 +137,6 @@ vector<string> LogfileParser::uniquePages() const
 {
     return uniqueURLs;
 }
+
+
+
