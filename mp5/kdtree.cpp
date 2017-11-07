@@ -2,6 +2,12 @@
  * @file kdtree.cpp
  * Implementation of KDTree class.
  */
+
+/**
+ * This function takes two templatized parameters and return boolean value which indicates whether the first points is smaller than the second value specified.
+ * depending on the comparison, operator '<' is used to distinguish between ties
+ **/
+
 template <int Dim>
 bool KDTree<Dim>::smallerDimVal(const Point<Dim>& first,
                                 const Point<Dim>& second, int curDim) const
@@ -15,6 +21,11 @@ bool KDTree<Dim>::smallerDimVal(const Point<Dim>& first,
         return first[curDim] < second[curDim];
 }
 
+/**
+ * This function takes three templated parameters, and it returns boolean value indicating whether the 
+ * potential value is closer to the target value than the currentBest value. In case there is a tie, similarly to the previous function,
+ * it determines by using the operator '<'. The distance is determined by the Euclidean distance and getd helper function is used to calculate that value.
+ **/
 template <int Dim>
 bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
                                 const Point<Dim>& currentBest,
@@ -33,6 +44,9 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
         return d1 < d2;
 }
 
+/**
+* This takes in one parameter which is a reference to a vector<Point<Dim>>. This builds a tree by calling several helper functions in the helper function itself.
+**/
 template <int Dim>
 KDTree<Dim>::KDTree(const vector<Point<Dim>>& newPoints)
 {
@@ -44,6 +58,11 @@ KDTree<Dim>::KDTree(const vector<Point<Dim>>& newPoints)
     
 }
 
+/**
+*  This function takes one parameter as well and returns a Point which is closest to the parameter given in the tree. 
+* Again, Euclidean distance is used to determine the closeness and in case of a tie '<' operator is being used. It calls several helper function
+* to achieve its functionality in building tree. 
+**/
 template<int Dim>
 Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
 {
@@ -58,6 +77,9 @@ Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
     return currentBest;
 }
 
+/**
+ * This is a helper function to calculate the Euclidean distance by accepting two points and returning the Euclidean distance between those two points 
+ **/
 template<int Dim>
 int KDTree<Dim>::getd(const Point<Dim> & point1, const Point<Dim> & point2) const
 {
@@ -69,6 +91,9 @@ int KDTree<Dim>::getd(const Point<Dim> & point1, const Point<Dim> & point2) cons
     return d;
 }
 
+/**
+ * This is a helper function of the constructor. It is used to build a tree structure by providing the adaquate parameter values to various helper functions. 
+ **/
 
 template<int Dim>
 void KDTree<Dim>::KDTreehelper(int left, int right, int dimension)
@@ -81,7 +106,9 @@ void KDTree<Dim>::KDTreehelper(int left, int right, int dimension)
     
 }
 
-
+/**
+ * This function implements a quickselect algorithm provided by the link from the course webpage. It uses recursion to achieve the functionality
+ **/
 template<int Dim>
 void KDTree<Dim>::quickselect(int left, int right, int midindex, int dimension)
 {
@@ -101,6 +128,9 @@ void KDTree<Dim>::quickselect(int left, int right, int midindex, int dimension)
 
 }
 
+/**
+ * used in quickselect this function is done in linear time and it groups a list into two parts. One with less than and one with more than specified element
+ **/
 template<int Dim>
 int KDTree<Dim>::partition(int left, int right, int pivotIndex, int dimension)
 {
@@ -127,6 +157,9 @@ int KDTree<Dim>::partition(int left, int right, int pivotIndex, int dimension)
     return storeIndex;
 }
 
+/**
+ * Helper function called from  the nearest neighbor. As already mentioned from description of the FindNearestNeighbor function
+ * the Euclidean distance is used to determine and fine the nearest neighbor. This function recursively build up solution**/
 template<int Dim>
 void KDTree<Dim>::findNNHelper(int left, int right, int dimension, int min, bool &isFirst, const Point<Dim> & query, Point<Dim> & currentBest) const
 {
