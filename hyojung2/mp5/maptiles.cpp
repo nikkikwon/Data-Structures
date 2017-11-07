@@ -9,6 +9,11 @@
 
 using namespace std;
 
+/** 
+ * This function mpas the rectangular regions of the SourceImage to TileImages. It dynamically allocate canvas with same size
+ * as the SourceImage and then create, return its pointer at the end.
+ **/
+
 MosaicCanvas* mapTiles(SourceImage const& theSource,
                        vector<TileImage> const& theTiles)
 {
