@@ -10,7 +10,7 @@
 using namespace std;
 
 MosaicCanvas* mapTiles(SourceImage const& theSource,
-                       vector<TileImage> const& theTiles)
+                       vector<TileImage> /*const*/& theTiles)
 {
     /**
      * @todo Implement this function!
@@ -43,7 +43,7 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
     // Finally, fill tiles
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
-            const TileImage* matchTile = get_match_at_idx(
+            /*const*/ TileImage* matchTile = get_match_at_idx(
                 tree, tile_avg_map, theTiles, theSource, row, col);
             mosaic->setTile(row, col, *matchTile);
         }
@@ -52,9 +52,8 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
     return mosaic;
 }
 
-const TileImage* get_match_at_idx(const KDTree<3>& tree,
-                                  map<HSLAPixel, int> tile_avg_map,
-                                  const vector<TileImage>& theTiles,
+/*const*/ TileImage* get_match_at_idx(const KDTree<3>& tree, map<HSLAPixel, int> tile_avg_map, 
+                                /*const*/ vector<TileImage>& theTiles,
                                   const SourceImage& theSource, int row,
                                   int col)
 {
