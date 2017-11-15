@@ -31,7 +31,7 @@ using namespace cs225;
  * @param theTiles The tiles image to use in the mosaic
  */
 MosaicCanvas* mapTiles(SourceImage const& theSource,
-                       vector<TileImage> const& theTiles);
+                       vector<TileImage> /*const*/& theTiles);
 
 /// @cond SOL
 /**
@@ -48,9 +48,9 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
  *
  * @returns the "nearest neighbor" tile
  */
-const TileImage* get_match_at_idx(const KDTree<3>& tree,
+/*const*/ TileImage* get_match_at_idx(const KDTree<3>& tree,
                                   map<HSLAPixel, int> tile_avg_map,
-                                  const vector<TileImage>& theTiles,
+                                  /*const*/ vector<TileImage>& theTiles,
                                   const SourceImage& theSource, int row,
                                   int col);
 /// @endcond

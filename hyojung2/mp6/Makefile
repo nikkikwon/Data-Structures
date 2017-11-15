@@ -14,9 +14,9 @@ OBJS_MAIN = $(OBJS_PROVIDED)
 CXX = clang++
 LD = clang++
 WARNINGS = -pedantic -Wall -Werror -Wfatal-errors -Wextra -Wno-unused-parameter -Wno-unused-variable
-CXXFLAGS = -std=c++1y -stdlib=libc++ -g -O0 $(WARNINGS) -MMD -MP -msse2 -c
-CXXFLAGS_PROVIDED = -O0
-CXXFLAGS_STUDENT = -O0
+CXXFLAGS = -std=c++1y -stdlib=libc++ -g -O3 $(WARNINGS) -MMD -MP -msse2 -c
+CXXFLAGS_PROVIDED = -O3
+CXXFLAGS_STUDENT = -O3
 LDFLAGS = -std=c++1y -stdlib=libc++ -lc++abi -lpthread
 ASANFLAGS = -fsanitize=address -fno-omit-frame-pointer
 
