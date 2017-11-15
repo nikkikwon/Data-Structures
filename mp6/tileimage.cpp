@@ -86,6 +86,9 @@ HSLAPixel TileImage::calculateAverageColor() const {
 void TileImage::paste(PNG& canvas, int startX, int startY, int resolution) const {
     // If possible, avoid floating point comparisons. This helps ensure that
     // students' photomosaic's are diff-able with solutions
+    if( getResolution == resolution)
+	return;
+
     if (getResolution() % resolution == 0) {
         int scalingRatio = getResolution() / resolution;
 
