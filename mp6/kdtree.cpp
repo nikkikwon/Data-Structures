@@ -217,3 +217,4 @@ double KDTree<Dim>::distanceSquared(const Point<Dim>& first,
         distsqr += (first[i] - second[i]) * (first[i] - second[i]);
     return distsqr;
 }
+

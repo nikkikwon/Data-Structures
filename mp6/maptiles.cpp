@@ -69,3 +69,4 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
     int index = tile_avg_map[nearestRGBA];
     return &theTiles[index];
 }
+
