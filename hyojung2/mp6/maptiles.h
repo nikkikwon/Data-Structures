@@ -55,3 +55,4 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
                                   int col);
 /// @endcond
 #endif // MAPTILES_H
+
