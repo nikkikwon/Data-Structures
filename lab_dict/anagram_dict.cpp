@@ -23,7 +23,28 @@ using std::ifstream;
 AnagramDict::AnagramDict(const string& filename)
 {
     /* Your code goes here! */
+    ifstream words(filename);
+    vector<string> Words;
+    string word;
+    auto val = dict.find(word);
+    
+    if (!words.is_open())
+        return;
+    while (getline(words, word))
+    {
+        sort(word.begin(), word.end());
+        if (val == dict.end())
+		{
+			Words.push_back(word);
+            dict.insert(make_pair(word, Words));
+        }
+		else
+		{
+			(val->second).push_back(word);
+		}
+    }	
 }
+
 
 /**
  * Constructs an AnagramDict from a vector of words.
@@ -32,6 +53,27 @@ AnagramDict::AnagramDict(const string& filename)
 AnagramDict::AnagramDict(const vector<string>& words)
 {
     /* Your code goes here! */
+    vector<string> word;
+    for (unsigned long i = 0; i < words.size(); i++)
+    {
+        word.push_back(words[i]);
+        string temp = word[i];
+        
+        sort(temp.begin(), temp.end());
+        auto val = dict.find(temp);
+
+        if (val == dict.end())
+        {
+            vector<string> word2;
+			word2.push_back(word[i]);
+            dict.insert(make_pair(temp, word2));
+        }
+        
+        else
+        {
+            (val -> second).push_back(word[i]);
+        }
+    }
 }
 
 /**
@@ -43,7 +85,15 @@ AnagramDict::AnagramDict(const vector<string>& words)
 vector<string> AnagramDict::get_anagrams(const string& word) const
 {
     /* Your code goes here! */
-    return vector<string>();
+
+    string temp = word;
+   	sort(temp.begin(), temp.end());
+    auto val = dict.find(temp);
+    vector<string> retval = val -> second;
+
+    if (val == dict.end())
+        return vector<string>();
+    return retval;
 }
 
 /**
@@ -55,5 +105,12 @@ vector<string> AnagramDict::get_anagrams(const string& word) const
 vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
     /* Your code goes here! */
-    return vector<vector<string>>();
+    vector< vector <string>> temp;
+    for (auto i = dict.begin(); i != dict.end(); i++)
+    {
+        if (!((i->second).size() < 2))
+    	temp.push_back(i->second);
+    }
+    return temp;
 }
+
