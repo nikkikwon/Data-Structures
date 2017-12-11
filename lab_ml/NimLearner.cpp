@@ -4,6 +4,10 @@
  */
 
 #include "NimLearner.h"
+#include <sstream>
+#include <string>
+#include <stdio.h>
+#include <iostream>
 
 
 /**
@@ -26,6 +30,8 @@
 NimLearner::NimLearner(unsigned startingTokens) : g_(true) 
 {
 
+  
+  token = startingTokens;
   unsigned int size = startingTokens; 
   unsigned int vertex = (2*size)+2;
   int count = 1; 
@@ -99,35 +105,40 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true)
  */
 std::vector<Edge> NimLearner::playRandomGame() const 
 {
-  //unsigned long random;
   vector<Edge> path;
-/*
-  string label = g_.getVertexLabel(startingVertex_);
+  int temp = 1 + (rand() % 2);
+  int l = token;
+  int temp2 = 2;
 
-  while (label != "p1-0" || label != "p2-0" )
+  Vertex next;
+  Vertex start = startingVertex_;
+
+  std::stringstream s;
+  s<< "p1" << "-" << token;
+  start = g_.getVertexByLabel(s.str());
+
+  while (l != 0)
   {
-    if (label[1] == 1)
-    {
-      random = rand() % 2;
-      Vertex insert = g_.getVertexByLabel(label);
-      path.push_back(g_.getEdge(insert, insert * 2 - random));
-      label = g_.getVertexLabel(insert * 2 - random );
-    }
+      std::stringstream ss;
+      if (l == 1)
+      {
+        temp = 1;
+      }
+      ss<< "p" << temp2 << "-" << l - temp;
+      next = g_.getVertexByLabel(ss.str());
+      path.push_back(g_.getEdge(start, next));
 
-    if (label[1] == 2)
-    {
-      random = rand() % 2;
-      Vertex insert = g_.getVertexByLabel(label);
-      path.push_back(g_.getEdge(insert, insert - startingVertex_ - 2 - random));
-      label = g_.getVertexLabel(insert - startingVertex_ - 2 - random );
-    }
-   
-  }*/
-
+      if (temp2 == 1)
+        temp2 = 2;
+      else
+        temp2 = 1;
+    
+      start = next;
+      l = l - temp;
+      temp = 1 + (rand() % 2);
+  } 
   return path;
 }
-
-
 
 
 
