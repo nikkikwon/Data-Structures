@@ -1,20 +1,25 @@
-Exam report for exam5 / hyojung2
+Exam report for exam7 / hyojung2
 
 
-                    Question ID PL Score Recorded Score
--------------------------------------------------------
-           mc-array-resize-fa17        1              1
-         mc-dll-delete-fa17-01a        1              1
- mc-dll-implementation-fa17-01a        1              1
-         mc-fa17-list-insert-1c        1              1
-mc-list-delete-runtime-fa17-02a        1              1
-       mc-list-runtime-fa17-02d        1              1
-      mc-list-vs-array-fa17-01c        1              1
-                  mc-qs-fa17-2b        1              1
-mc-queue-implementation-fa17-2a        1              1
-           mc-templates-fa17-2a        1              1
--------------------------------------------------------
-                          Total       10             10
+                  Question ID PL Score Recorded Score
+-----------------------------------------------------
+         mc-avl-rotation-001b        1              1
+mc-binaryTree-traversals-005a        0              0
+       mc-bst-delete-one-001d        1              1
+       mc-bst-delete-two-002c        1              1
+                mc-bst-nodes3        1              1
+                 mc-cpp3-001j        0              0
+                 mc-cpp3-003a        0              1
+                 mc-cpp3-003g        1              1
+                 mc-cpp4-006g        1              1
+                 mc-cpp4-007c        1              1
+        mc-fa17-mergesort-01a        0              0
+         mc-fa17-pick-adt-01c        1              1
+          mc-tree-properties1        1              1
+             quiz9-Huffman-2a        0              0
+             quiz9-Huffman-5b        0              0
+-----------------------------------------------------
+                        Total        9             10
 
 
 
