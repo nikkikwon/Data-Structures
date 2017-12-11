@@ -30,6 +30,7 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true)
   unsigned int vertex = (2*size)+2;
   int count = 1; 
 
+
   for (unsigned int i = 0; i < vertex; i++)
   {
     g_.insertVertex();
@@ -48,24 +49,41 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true)
   }
 
 
-  if (startingTokens <= 2 )
+  if (startingTokens >= 2 )
   { 
     for (unsigned int i = 2; i <=size; i++)
     {
+      Edge temp;
       g_.insertEdge(i, size + (i-1));
-       g_.insertEdge(i, size + i );
+      temp = g_.getEdge(i, size + (i-1));
+      temp.weight = 0;
+
+      g_.insertEdge(i, size + i );
+      temp = g_.getEdge(i, size + i );
+      temp.weight = 0;
     }
 
     for (unsigned int i = (size*2)+1 ; i >= size +3; i--)
     {
+       Edge temp;
        g_.insertEdge(i, size - count );
+       temp = g_.getEdge(i, size - count);
+       temp.weight = 0;
+       
        g_.insertEdge(i, size - count - 1);
-      count ++;
+       temp = g_.getEdge(i, size - count - 1);
+       temp.weight = 0;
+       count ++;
     }
   }
-
+  Edge temp;
   g_.insertEdge(1,0);
+  temp = g_.getEdge(1,0);
+       temp.weight = 0;
+
   g_.insertEdge(size + 2, 0);
+  temp = g_.getEdge(size + 2, 0);
+       temp.weight = 0;
 
 }
 
