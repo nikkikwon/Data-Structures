@@ -76,9 +76,10 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true)
        count ++;
     }
   }
+
   Edge temp;
-  g_.insertEdge(1,0);
-  temp = g_.getEdge(1,0);
+  g_.insertEdge(1,size+1);
+  temp = g_.getEdge(1,size+1);
        temp.weight = 0;
 
   g_.insertEdge(size + 2, 0);
@@ -96,11 +97,38 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true)
  *
  * @returns A random path through the state space graph.
  */
-std::vector<Edge> NimLearner::playRandomGame() const {
+std::vector<Edge> NimLearner::playRandomGame() const 
+{
+  //unsigned long random;
   vector<Edge> path;
+/*
+  string label = g_.getVertexLabel(startingVertex_);
+
+  while (label != "p1-0" || label != "p2-0" )
+  {
+    if (label[1] == 1)
+    {
+      random = rand() % 2;
+      Vertex insert = g_.getVertexByLabel(label);
+      path.push_back(g_.getEdge(insert, insert * 2 - random));
+      label = g_.getVertexLabel(insert * 2 - random );
+    }
+
+    if (label[1] == 2)
+    {
+      random = rand() % 2;
+      Vertex insert = g_.getVertexByLabel(label);
+      path.push_back(g_.getEdge(insert, insert - startingVertex_ - 2 - random));
+      label = g_.getVertexLabel(insert - startingVertex_ - 2 - random );
+    }
+   
+  }*/
 
   return path;
 }
+
+
+
 
 
 /*
