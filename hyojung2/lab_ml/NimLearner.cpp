@@ -23,7 +23,49 @@
  *
  * @param startingTokens The number of starting tokens in the game of Nim.
  */
-NimLearner::NimLearner(unsigned startingTokens) : g_(true) {
+NimLearner::NimLearner(unsigned startingTokens) : g_(true) 
+{
+
+  unsigned int size = startingTokens; 
+  unsigned int vertex = (2*size)+2;
+  int count = 1; 
+
+  for (unsigned int i = 0; i < vertex; i++)
+  {
+    g_.insertVertex();
+  }
+
+  for (unsigned int i = 0; i <=size; i++)
+  {
+    string print = "p1-" + std::to_string(i);
+    g_.setVertexLabel(i, print);
+  }
+
+  for (unsigned int i = size+1; i <= (2*size)+1; i++)
+  {
+    string print = "p2-" + std::to_string(i - size - 1);
+    g_.setVertexLabel(i, print);
+  }
+
+
+  if (startingTokens <= 2 )
+  { 
+    for (unsigned int i = 2; i <=size; i++)
+    {
+      g_.insertEdge(i, size + (i-1));
+       g_.insertEdge(i, size + i );
+    }
+
+    for (unsigned int i = (size*2)+1 ; i >= size +3; i--)
+    {
+       g_.insertEdge(i, size - count );
+       g_.insertEdge(i, size - count - 1);
+      count ++;
+    }
+  }
+
+  g_.insertEdge(1,0);
+  g_.insertEdge(size + 2, 0);
 
 }
 
