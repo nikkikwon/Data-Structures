@@ -45,7 +45,7 @@ void SquareMaze::makeMaze(int width, int height)
 
         if(rand() % 2)
         {
-            if (removex < width - 1)
+            if (removex +1 < width )
             {
                 if (dset.find(removey * width + removex) != dset.find(removey * width + removex + 1))
                 {
@@ -53,10 +53,9 @@ void SquareMaze::makeMaze(int width, int height)
                     dset.setunion(removey * width + removex, removey * width + (removex + 1));
                     i++;
                 }
-
             }   
         }
-        else if (removey < height - 1)
+        else if (removey +1 < height)
         {   
             if (dset.find(removey * width + removex) != dset.find((removey + 1) * width + removex))
             {
@@ -74,33 +73,38 @@ void SquareMaze::makeMaze(int width, int height)
 **/
 bool SquareMaze::canTravel(int x, int y, int dir) const
 {
-    if(dir == 0 && x != width-1)
+    if (dir == 0)
     {
-        if (rightwall [y * width + x] == false)
-            return true;
-        return false;
-    }
-	
-    if(dir == 1 && y != height-1)
-    {
-        if (downwall[y*width + x] == false)
-            return true;
-        return false;
+        if (x != width -1)
+        {
+            return (!(rightwall [y * width + x]));
+        }
     }
 
-    if(dir == 2 && x != 0)
+    if(dir == 1)
     {
-        if (rightwall[y*width + x-1] == false)
-            return true;
-        return false;
+        if(y != height -1)
+        {
+            return (!(downwall[y*width + x]));
+        }
     }
 
-	if(dir == 3 && y != 0)
+    if(dir == 2)
     {
-        if (downwall[(y-1)*width + x] == false)
-            return true;
-        return false;
-    } 
+        if(x != 0)
+        {
+            return (!(rightwall[y*width + x-1]));
+        }
+    }
+
+    if(dir == 3)
+    {
+        if(y != 0)
+        {
+            return (!(downwall[(y-1)*width + x]));
+        }
+    }
+
 	return false;
 }
 /**
@@ -108,7 +112,6 @@ bool SquareMaze::canTravel(int x, int y, int dir) const
  **/
 void SquareMaze::setWall(int x, int y, int dir, bool exists)
 {
-
     if (dir == 0)
     {
         rightwall[y * width + x] = exists;
@@ -246,10 +249,11 @@ PNG * SquareMaze::drawMaze() const
 
      for (int i = 0; i < width * 10 + 1; i++)
     {
-        (*ret).getPixel (width * 10, i) -> h = 0;
-        (*ret).getPixel (width * 10, i) -> s = 0;
-        (*ret).getPixel (width * 10, i) -> l = 0;
-        (*ret).getPixel (width * 10, i) -> a = 1;
+        int x = width * 10;
+        (*ret).getPixel (x, i) -> h = 0;
+        (*ret).getPixel (x, i) -> s = 0;
+        (*ret).getPixel (x, i) -> l = 0;
+        (*ret).getPixel (x, i) -> a = 1;
     }
     
     for (int i = 1; i < 10; i++)
@@ -269,20 +273,26 @@ PNG * SquareMaze::drawMaze() const
         {
             for (int j = 0; j <= 10; j++)
             {
-                (*ret).getPixel ((x + 1) * 10, y * 10 + j) -> h = 0;
-                (*ret).getPixel ((x + 1) * 10, y * 10 + j) -> s = 0;
-                (*ret).getPixel ((x + 1) * 10, y * 10 + j) -> l = 0;
-                (*ret).getPixel ((x + 1) * 10, y * 10 + j) -> a = 1;
+                int x2 = (x + 1) * 10;
+                int y2 = y * 10 + j;
+
+                (*ret).getPixel (x2, y2) -> h = 0;
+                (*ret).getPixel (x2, y2) -> s = 0;
+                (*ret).getPixel (x2, y2) -> l = 0;
+                (*ret).getPixel (x2, y2) -> a = 1;
             }
         }
         if (downwall[i])
         {
             for (int j = 0; j <= 10; j++)
             {
-                (*ret).getPixel (x * 10 + j, (y + 1) * 10) -> h = 0;
-                (*ret).getPixel (x * 10 + j, (y + 1) * 10) -> s = 0;
-                (*ret).getPixel (x * 10 + j, (y + 1) * 10) -> l = 0;
-                (*ret).getPixel (x * 10 + j, (y + 1) * 10) -> a = 1;  
+                int x2 = x * 10 + j;
+                int y2 = (y + 1) * 10;
+
+                (*ret).getPixel (x2, y2) -> h = 0;
+                (*ret).getPixel (x2, y2) -> s = 0;
+                (*ret).getPixel (x2, y2) -> l = 0;
+                (*ret).getPixel (x2, y2) -> a = 1;  
             }
                 
         }
@@ -305,7 +315,7 @@ PNG * SquareMaze::drawMazeWithSolution()
     {
         if (path[i] == 0)
         {
-            for (int j = 0; j <11; j++)
+            for (int j = 0; j <=10; j++)
             {
                 (*ret).getPixel(x + j, y) -> h = 0;
                 (*ret).getPixel(x + j, y) -> s = 1;
@@ -316,7 +326,7 @@ PNG * SquareMaze::drawMazeWithSolution()
         }
         else if (path[i] == 1)
         {
-            for (int j = 0; j < 11; j++)
+            for (int j = 0; j <= 10; j++)
             {
                 (*ret).getPixel(x, y + j) -> h = 0;
                 (*ret).getPixel(x, y + j) -> s = 1;
@@ -327,7 +337,7 @@ PNG * SquareMaze::drawMazeWithSolution()
         }
         else if (path[i] == 2)
         {
-            for (int j = 0; j <11; j++)
+            for (int j = 0; j <= 10; j++)
             {
                 (*ret).getPixel(x - j, y) -> h = 0;
                 (*ret).getPixel(x - j, y) -> s = 1;
@@ -339,7 +349,7 @@ PNG * SquareMaze::drawMazeWithSolution()
         }
         else 
         {
-            for (int j = 0; j < 11; j++)
+            for (int j = 0; j <=10; j++)
             {
                 (*ret).getPixel(x, y - j) -> h = 0;
                 (*ret).getPixel(x, y - j) -> s = 1;
