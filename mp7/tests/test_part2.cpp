@@ -1,4 +1,4 @@
-/*#include "catch.hpp"
+#include "catch.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -346,4 +346,4 @@ TEST_CASE("testDrawSolutionLarge", "[weight=10][part2]")
 	actualOutput->writeToFile("testDrawSolutionLarge"+ string(".png"));
 	REQUIRE(*actualOutput == solnImage);
 }
-*/
+
